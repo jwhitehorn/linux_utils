@@ -1,0 +1,22 @@
+#!/bin/bash
+
+unset ENABLE_CPU DISABLE_CPU HELP
+
+while getopts 'e:d:h' c
+do
+  case $c in
+    e) ENABLE_CPU=$OPTARG ;;
+    d) DISABLE_CPU=$OPTARG ;;
+    h) HELP=TRUE ;;
+  esac
+done
+
+if [ -n "$ENABLE_CPU" ]; then
+        echo "Enabling CPU $ENABLE_CPU"
+        echo 0 | sudo tee /sys/devices/system/cpu/cpu$ENABLE_CPU/online
+fi
+
+if [ -n "$DISABLE_CPU" ]; then
+	echo "Disabling CPU $DISABLE_CPU"
+	echo 0 | sudo tee /sys/devices/system/cpu/cpu$DISABLE_CPU/online
+fi
