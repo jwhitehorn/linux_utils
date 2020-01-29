@@ -1,13 +1,14 @@
 #!/bin/bash
 
-unset ENABLE_CPU DISABLE_CPU HELP
+unset ENABLE_CPU DISABLE_CPU HELP LIST
 
-while getopts 'e:d:h' c
+while getopts 'e:d:hl' c
 do
   case $c in
     e) ENABLE_CPU=$OPTARG ;;
     d) DISABLE_CPU=$OPTARG ;;
     h) HELP=TRUE ;;
+    l) LIST=TRUE ;;
   esac
 done
 
@@ -21,12 +22,14 @@ check_root() {
 display_help() {
   echo "CPUd version 1.0"
   echo "Copyright 2020, Jason Whitehorn - BSD II Clause"
+  echo "   (see https://github.com/jwhitehorn/linux_utils for more info)"
   echo ""
   echo "Usage: cpud [option] [cpu #]"
   echo ""
   echo "Options:"
-  echo "   -d      Disable the specified CPU/core"
-  echo "   -e      Enable the specified CPU/core"
+  echo "   -d      Disable the specified CPU"
+  echo "   -e      Enable the specified CPU"
+  echo "   -l      List basic information about the CPU and their status"
   echo "   -h      Display this wonderful help"
   echo ""
   echo "Examples:"
@@ -52,4 +55,8 @@ fi
 
 if [ -n "$HELP" ]; then
   display_help
+fi
+
+if [ -n "$LIST" ]; then
+  lscpu
 fi
