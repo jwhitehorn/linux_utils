@@ -11,14 +11,23 @@ do
   esac
 done
 
+check_root() {
+  if (( $EUID != 0 )); then
+    echo "This operation can only be befored by root"
+    exit
+  fi
+}
+
 if [ -n "$ENABLE_CPU" ]; then
+        check_root
         echo "Enabling CPU $ENABLE_CPU"
-        echo 1 | sudo tee /sys/devices/system/cpu/cpu$ENABLE_CPU/online
+        echo 1 | tee /sys/devices/system/cpu/cpu$ENABLE_CPU/online
 fi
 
 if [ -n "$DISABLE_CPU" ]; then
+  check_root
 	echo "Disabling CPU $DISABLE_CPU"
-	echo 0 | sudo tee /sys/devices/system/cpu/cpu$DISABLE_CPU/online
+	echo 0 | tee /sys/devices/system/cpu/cpu$DISABLE_CPU/online
 fi
 
 if [ -n "$HELP" ]; then
