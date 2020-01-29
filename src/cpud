@@ -18,19 +18,7 @@ check_root() {
   fi
 }
 
-if [ -n "$ENABLE_CPU" ]; then
-        check_root
-        echo "Enabling CPU $ENABLE_CPU"
-        echo 1 | tee /sys/devices/system/cpu/cpu$ENABLE_CPU/online > /dev/null
-fi
-
-if [ -n "$DISABLE_CPU" ]; then
-  check_root
-	echo "Disabling CPU $DISABLE_CPU"
-	echo 0 | tee /sys/devices/system/cpu/cpu$DISABLE_CPU/online > /dev/null
-fi
-
-if [ -n "$HELP" ]; then
+display_help() {
   echo "CPUd version 1.0"
   echo "Copyright 2020, Jason Whitehorn - BSD II Clause"
   echo ""
@@ -48,4 +36,20 @@ if [ -n "$HELP" ]; then
   echo "   The above enables the 3rd CPU/core"
   echo "   (note: in both these examples, CPU/core numbering is 0 indexed)"
   echo ""
+}
+
+if [ -n "$ENABLE_CPU" ]; then
+        check_root
+        echo "Enabling CPU $ENABLE_CPU"
+        echo 1 | tee /sys/devices/system/cpu/cpu$ENABLE_CPU/online > /dev/null
+fi
+
+if [ -n "$DISABLE_CPU" ]; then
+  check_root
+	echo "Disabling CPU $DISABLE_CPU"
+	echo 0 | tee /sys/devices/system/cpu/cpu$DISABLE_CPU/online > /dev/null
+fi
+
+if [ -n "$HELP" ]; then
+  display_help
 fi
