@@ -20,3 +20,23 @@ if [ -n "$DISABLE_CPU" ]; then
 	echo "Disabling CPU $DISABLE_CPU"
 	echo 0 | sudo tee /sys/devices/system/cpu/cpu$DISABLE_CPU/online
 fi
+
+if [ -n "$HELP" ]; then
+  echo "CPUd version 1.0"
+  echo "Copyright 2020, Jason Whitehorn - BSD II Clause"
+  echo ""
+  echo "Usage: cpud [option] [cpu #]"
+  echo ""
+  echo "Options:"
+  echo "   -d      Disable the specified CPU/core"
+  echo "   -e      Enable the specified CPU/core"
+  echo "   -h      Display this wonderful help"
+  echo ""
+  echo "Examples:"
+  echo "cpud -d 3"
+  echo "   The above disables the 4th CPU/core"
+  echo "cpud -e 2"
+  echo "   The above enables the 3rd CPU/core"
+  echo "   (note: in both these examples, CPU/core numbering is 0 indexed)"
+  echo ""
+fi
